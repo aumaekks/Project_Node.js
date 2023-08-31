@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Trainer rating</title>
+    <!-- BOOTSTRAP CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="/style.css"> -->
+    
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@800&family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+    <!-- upper bar -->
+    <div>
+        <div>
+            <div class="card-body" style="font-size:30px; background-color: rgba(255, 255, 255, 0.347);">
+                <h1 class="fixed" style= "font-size:40px; color:white;">HEALTHCLUB</h1><center>
+                <a style='color:rgb(0, 0, 0);'href="/">Home</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/schedule">Schedule</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/rating">Rating</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="report">Report</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/bookinglist">Booking cart</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/profile"><%= name %></a> &nbsp;&nbsp;
+                <a href="/logout" class="btn btn-danger">Logout</a></center>
+            </div>
+            <div>
+                
+            </div>
+        </div>
+    </div>
+
+    <%
+        const farmat_date = (date) => {
+        const originalDate = date;
+        const year = originalDate.getFullYear();
+        const month = (originalDate.getMonth() + 1).toString().padStart(2, "0");
+        const day = originalDate.getDate().toString().padStart(2, "0");
+
+        const formattedDate = `${year}-${month}-${day}`;
+        
+        return formattedDate;
+        }
+    %>
+    <!-- body -->
+    <br>
+    <div class="maintrainscr traincearch traincearchbox">
+        <form action="/complete-rating-trainer" method="post">
+            <input type="text" name="trainer_s_id" value="<%=trainer[0].trainerschedule_id %>" style="display:none">
+            <input type="text" name="book_date" value="<%=farmat_date(trainer[0].trainerbook_date) %>" style="display:none">
+            <h1> Trainer name : <%= trainer[0].trainer_name %></h1>
+            <h4> Gender : <%= trainer[0].full_gender %></h4>
+            <p> Training date : <%= farmat_date(trainer[0].trainerbook_date)%> Price : <%= trainer[0].price_payment%> </p>
+            Rating : <input type="radio" name="trainer_rating" value="1" required> <input type="radio" name="trainer_rating" value="2" required> <input type="radio" name="trainer_rating" value="3"> <input type="radio" name="trainer_rating" value="4"> <input type="radio" name="trainer_rating" value="5"><br>
+            Reccomend(not Reccomend) : <br>
+            <input type="checkbox" name="rec" value="1" > want to adjust the teaching method <br>
+            <input type="checkbox" name="rec" value="2" > want to teach more detail <br>
+            <input type="checkbox" name="rec" value="3" > inappropriate language <br>
+            Another : <input type="text" name="rec" ><br>
+            <button type="submit" class="button">Submit</button>
+        </form><br>
+    </div>
+    <a href="/rating/trainer"> <button class="button">Back</button> </a>
+
+    
+</body>
+</html>

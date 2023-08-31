@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Trainer Report</title>
+    <!-- BOOTSTRAP CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="/style.css"> -->
+    
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@800&family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="maintextreport">
+    <h1>Exercise Class Booking</h1>
+  </div>
+  
+    <!-- body -->
+    <div class="mainconmemberreport">
+      <form action="/report/classbooking" method="get">
+        <div class="radiomaintrinerreport">
+          <h1>Class typer</h1>
+          <input type="radio" name="class_type" value="all"> All <br>
+          <%
+            if(type_[0].length>0){
+              type_[0].forEach(data=>{
+                %> <input type="radio" name="class_type" value="<%=data.type_id%>"> <%=data.type_name%> <br> <%
+              })
+            }
+          %>
+          <h1>Customer</h1>
+          <input type="radio" name="cus_gender" value ='all'> All
+          <input type="radio" name="cus_gender" value = 'm'> Male
+          <input type="radio" name="cus_gender" value = 'f'> Female
+        </div>
+        
+        <div class="radiomaintrinerreport">
+          <h1>Customer range</h1>
+          between <br><input type="date" name="mindate" max="<%= new Date().toISOString().split('T')[0] %>"> <br>to <br><input type="date" name="maxdate" max="<%= new Date().toISOString().split('T')[0] %>" >
+        </div>
+
+        <div class="datemainconmemberreport">
+          <select name="date">
+            <option value="all" selected>All</option>
+            <option value="year">This year</option>
+            <option value="month">This month</option>
+            <option value="week">This week</option>
+            <option value="day">This day</option>
+          </select>
+          <button type="submit">Report</button>
+
+
+        </div>
+    
+        
+      </form>
+      
+    </div>
+   <div class="mainmemberreport">
+    <div class="chart">
+      <canvas id="myChart">
+          <script>
+              
+          const datalist = JSON.stringify('<%= trainer_name_list %>');
+          const numbook = JSON.stringify('<%= trainer_count_list %>');
+          const name = datalist.split(",");
+          const num =numbook.slice(1,-1).split(",").map(Number);
+          console.log(num);
+          new Chart(document.getElementById("myChart"), {
+              type: 'bar',
+              data: {
+                labels: name,
+                datasets: [
+                  {
+                    label: "Booking count",
+                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                    data: num
+                  }
+                ]
+              },
+              options: {
+                legend: { display: false },
+                title: {
+                  display: true,
+                  text: 'Predicted world population (millions) in 2050'
+                }
+              }
+          });
+          </script>
+      </canvas>
+  </div>
+    
+   </div>
+   <br>
+    
+   <div class="laylaeard">
+    <h1>Booking Infomation</h1>  
+    <%
+    console.log(trainer_name_list);
+    console.log(trainer_count_list);
+    var index = 0;
+     trainer_name_list.forEach((data)=>{
+        %>
+        <p><%=data%> : <%=trainer_count_list[index]%></p> 
+        <%
+        index++;
+     })
+    %>
+   
+    
+
+  </div>
+  <a href="/report"><button class="butmemreport">back</button></a>
+
+
+    
+</body>
+</html>

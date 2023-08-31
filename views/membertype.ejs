@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MemberType</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@800&family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</head>
+<body>
+    <center>
+        <h1 class="head">Select membertype</h1>
+    </center>
+    <form action="/confirmation" method="post">
+        <input type="hidden" name="customer_name" value="<%= customer_name %>">
+        <input type="hidden" name="customer_pass" value="<%= customer_pass %>">
+        <input type="hidden" name="customer_email" value="<%= customer_email %>">
+        <input type="hidden" name="customer_gender" value="<%= customer_gender %>">
+        <input type="hidden" name="customer_date" value="<%= customer_date %>">
+        <% 
+        var currentDate = new Date();
+        
+        var newDate = new Date(currentDate);
+       
+        if (membertype_list[0].length > 0) { 
+             membertype_list[0].forEach((data) => { 
+                %>
+                <div class="con">
+                    <div class="typebox">
+                        <div class="onlybox">
+                            <h1><%= data.duration + " " +data.type_name %></h1>
+                            <h4><%= data.price %></h4>
+                            <%
+                            if(data.type_name == 'day'){
+                                newDate.setDate(currentDate.getDate() + data.duration);
+                        
+                            }else if(data.type_name == 'month'){
+                                var originalDayOfMonth = currentDate.getDate();
+                                newDate.setMonth(currentDate.getMonth() + data.duration);
+                                var daysInMonth = new Date(newDate.getFullYear(), newDate.getMonth(), 0).getDate();
+                                newDate.setDate(Math.min(originalDayOfMonth, daysInMonth));
+                            }
+                            %>
+                            <p>you will be able to use the service until <%= newDate.toDateString() %></p>
+                            <input type="radio" name="membertype" value='<%= data.type_id %>' required>
+                        </div>
+                    </div>
+                </div>
+            <% }); 
+        } else { %>
+            <div>
+                <h1>Not Found</h1>
+            </div>
+        <% } %>
+
+        <div class="centypere">
+            <button class="memregis" type="submit">Register</button>
+        </div>
+        
+    </form>
+</body>
+</html>

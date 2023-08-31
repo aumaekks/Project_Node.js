@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+    <!-- BOOTSTRAP CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="/style.css"> -->
+    
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@800&family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+    <!-- upper bar -->
+    <div>
+        <div>
+            <div class="card-body" style="font-size:30px; background-color: rgba(255, 255, 255, 0.347);">
+                <h1 class="fixed" style= "font-size:40px; color:white;">HEALTHCLUB</h1><center>
+                <a style='color:rgb(0, 0, 0);'href="/">Home</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/schedule">Schedule</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/rating">Rating</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/bookinglist">Booking cart</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/profile"><%= name %></a> &nbsp;&nbsp;
+                <a href="/logout" class="btn btn-danger">Logout</a></center>
+            </div>
+            <div>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <!-- body -->
+    <%
+
+        const farmat_date = (date) => {
+            const originalDate = date;
+            const year = originalDate.getFullYear();
+            const month = (originalDate.getMonth() + 1).toString().padStart(2, "0");
+            const day = originalDate.getDate().toString().padStart(2, "0");
+
+            const formattedDate = `${year}-${month}-${day}`;
+            
+            return formattedDate;
+
+        }
+        
+        function hasDatePassed(sqlDateString) {
+            const currentDate = new Date();
+            const sqlDate = new Date(sqlDateString);
+          
+            const currentYear = currentDate.getUTCFullYear();
+            const currentMonth = currentDate.getUTCMonth()+1;
+            const currentDay = currentDate.getUTCDate();
+          
+            const sqlYear = sqlDate.getUTCFullYear();
+            const sqlMonth = sqlDate.getUTCMonth()+1;
+            const sqlDay = sqlDate.getUTCDate()+1;
+          
+            const daysPassed = Math.floor((currentDate - sqlDate) / (1000 * 60 * 60 * 24));
+            
+            
+            if(currentYear === sqlYear && currentMonth === sqlMonth && currentDay === sqlDay) {
+                return 1; // same day
+            } else if (currentYear > sqlYear || (currentYear === sqlYear && currentMonth > sqlMonth) || (currentYear === sqlYear && currentMonth === sqlMonth && currentDay > sqlDay)) {
+                if (daysPassed >= 7) {
+                    return 2; // more than 1 week has passed
+                } else {
+                    return 3; // less than 1 week has passed
+                }
+            }  else {
+              return 0; // date has not passed yet
+            }
+          }
+          
+          
+        const check_time = (time) =>{
+            const timeToCheck = time; // format is HH:MM:SS
+            const currentTime = new Date();
+            const currentHours = currentTime.getHours();
+            const currentMinutes = currentTime.getMinutes();
+            const currentSeconds = currentTime.getSeconds();
+
+            const [hoursToCheck, minutesToCheck, secondsToCheck] = timeToCheck.split(':');
+
+            if (hoursToCheck < currentHours) {
+            <!-- console.log('The time has passed'); -->
+                return true;
+            } else if (hoursToCheck === currentHours && minutesToCheck < currentMinutes) {
+            <!-- console.log('The time has passed'); -->
+                return true;
+            } else if (hoursToCheck === currentHours && minutesToCheck === currentMinutes && secondsToCheck <= currentSeconds) {
+            <!-- console.log('The time has passed'); -->
+                return true;
+            } else {
+            <!-- console.log('The time has not yet passed'); -->
+                return false;
+            }
+        }
+        
+        
+        if(unrated_list.length>0){
+            unrated_list.forEach(data=>{
+                if(hasDatePassed(data.classbook_date)===1){
+                    %><br>
+                    <div class="maintrainscr traincearch traincearchbox" style="border: green solid 2px;">
+                        <h1 style="color:green">This day</h1>
+                        <h1>Class Name : <%=data.class_name %></h1>
+                        <h4>Caregiver Name : <%=data.trainer_name %></h4>
+                        <p>Trainering day : <%=data.class_day %></p>
+                        <p>Trainering Time : <%=data.class_time %></p>
+                        <p>Trainering date : <%=farmat_date(data.classbook_date) %></p>
+                        <%
+                        if(check_time(data.class_time)){
+                           %> <a href="/rating/class?t_rating=<%=data.classschedule_id %>"> <button class="button">Rating</button> </a> <%
+                        }else{
+                           %> <a href="" > <button  disabled>Not passed yet</button> </a> <%
+                        }
+                    %>
+                    </div><br>
+                <%
+                }else if(hasDatePassed(data.classbook_date)===2){
+                    %><br>
+                    <div class="maintrainscr traincearch traincearchbox" style="border: red solid 2px;">
+                        <h1 style="color:red">Passed more than 1 week</h1>
+                        <h1>Class Name : <%=data.class_name %></h1>
+                        <h4>Caregiver Name : <%=data.trainer_name %></h4>
+                        <p>Trainering day : <%=data.class_day %></p>
+                        <p>Trainering Time : <%=data.class_time %></p>
+                        <p>Trainering date : <%=farmat_date(data.classbook_date) %></p>
+                        <a href="/rating/class?t_rating=<%=data.classschedule_id %>"> <button class="button">Rating</button> </a> <% 
+                    %>
+                    </div><br>
+                <%
+                }else if(hasDatePassed(data.classbook_date)===3){
+                    %><br>
+                    <div class="maintrainscr traincearch traincearchbox" style="border: blue solid 2px;">
+                        <h1>Class Name : <%=data.class_name %></h1>
+                        <h4>Caregiver Name : <%=data.trainer_name %></h4>
+                        <p>Trainering day : <%=data.class_day %></p>
+                        <p>Trainering Time : <%=data.class_time %></p>
+                        <p>Trainering date : <%=farmat_date(data.classbook_date) %></p>
+                        <a href="/rating/class?t_rating=<%=data.classschedule_id %>"> <button class="button">Rating</button> </a> <% 
+                    %>
+                    </div><br>
+                <%
+                }else if(hasDatePassed(data.classbook_date)===0){
+                    %><br>
+                    <div class="maintrainscr traincearch traincearchbox" style="border: gray solid 2px;">
+                        <h1>Class Name : <%=data.class_name %></h1>
+                        <h4>Caregiver Name : <%=data.trainer_name %></h4>
+                        <p>Trainering day : <%=data.class_day %></p>
+                        <p>Trainering Time : <%=data.class_time %></p>
+                        <p>Trainering date : <%=farmat_date(data.classbook_date) %></p>
+                        <a href="" > <button  disabled>Not passed yet</button> </a> <% 
+                    %>
+                    </div><br>
+                <%
+                }
+            })
+        }else{
+            %> 
+                <div class="center maintrainscr traincearch traincearchbox">
+                    <h1>Not have trainer for Rating</h1> 
+                </div>
+            <%
+        }
+    %>
+    <a href="/rating"> <button class=" ">Back</button> </a>
+</body>
+</html>

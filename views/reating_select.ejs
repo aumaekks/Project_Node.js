@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+    <!-- BOOTSTRAP CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="/style.css"> -->
+    
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@800&family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+    <!-- upper bar -->
+    <div>
+        <div>
+            <div class="card-body" style="font-size:30px; background-color: rgba(255, 255, 255, 0.347);">
+                <h1 class="fixed" style= "font-size:40px; color:white;">HEALTHCLUB</h1><center>
+                <a style='color:rgb(0, 0, 0);'href="/">Home</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/schedule">Schedule</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/rating">Rating</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/bookinglist">Booking cart</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/profile"><%= name %></a> &nbsp;&nbsp;
+                <a href="/logout" class="btn btn-danger">Logout</a></center>
+            </div>
+            <div>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <!-- body -->
+    <div class = "center">
+        <div class = "borderbutton">
+            <a href="/rating/trainer"><button class="button"> Rating Trainer</button></a>
+            <a href="/rating/class"><button class="button"> Rating Exercise Class</button></a>
+            <a href="/rating/equipment"><button class="button"> Rating Exercise Equipment</button></a>
+        </div>
+    </div>
+
+    <a href="/"> <button>Back</button> </a>
+</body>
+</html>

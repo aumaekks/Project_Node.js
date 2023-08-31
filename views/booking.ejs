@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div class="mainbooking">
+        <div class="cenbook">
+            <h1>Booking Trainer</h1><br><br>
+    <% 
+    let today = new Date();
+    let dayOfWeek = today.getDay();
+    let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    let day = trainer_booking[0].trainer_day;
+    
+    let daysUntilTargetDay = (days.indexOf(day) + 7 - dayOfWeek) % 7;
+    const current = today.getDate()+daysUntilTargetDay;
+
+    let targetDate = new Date(today.getFullYear(), today.getMonth(),current+1);
+    let targetDateString = targetDate.toISOString().slice(0, 10);
+
+    if(trainer_booking.length>0){
+        %><p>trainer name : <%= trainer_booking[0].trainer_name%></p><%
+        %><p>age : <%= trainer_booking[0].age%></p><%
+        %><p>trainer day : <%= trainer_booking[0].trainer_day%></p><%
+        %><p>trainer time : <%= trainer_booking[0].trainer_time%></p><%
+        %><p>trainer date : <%= targetDateString%></p><%
+        %><p>point : <%= trainer_booking[0].point%></p><%
+        %><p>price : <%= trainer_booking[0].price%></p><br><%
+        %>
+        <form action="/addbook" method="post">
+            <input type="hidden" name="booking" value="<%= trainer_booking[0].trainerschedule_id %>">
+            <div class="butbook">
+                <button class="butbook" type="submit">+ Add in Booking List</button>
+
+            </div>
+
+            
+        </form>
+        <%
+    }else{
+        %>
+        <h1>Error</h1>
+        <%
+    }     
+    %>
+        </div>
+
+
+    </div>
+    
+</body>
+</html>

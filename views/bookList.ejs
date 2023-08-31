@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@800&family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+    <%
+    
+    const date_time = (day_)=>{
+        let today = new Date();
+        let dayOfWeek = today.getDay();
+        let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        let day = day_;
+        
+        let daysUntilTargetDay = (days.indexOf(day) + 7 - dayOfWeek) % 7;
+        const current = today.getDate()+daysUntilTargetDay;
+
+        let targetDate = new Date(today.getFullYear(), today.getMonth(),current+1);
+        let targetDateString = targetDate.toISOString().slice(0, 10);
+        return targetDateString;
+    }
+    var totalPrice = 0;
+    var totalPoint = 0;
+    if(booklist.length>0){
+        booklist.forEach(data=>{
+           %>
+           <div class="mainbooklist">
+            <div class="cenbooklist">
+                <h1> Trainer : <%=data[0].trainer_name %></h1>
+                <p>Day: <%=data[0].trainer_day %> , Time: <%=data[0].trainer_time %></p>
+                <p>Date: <%=date_time(data[0].trainer_day) %></p>
+                <p>Price: <%=data[0].price %> , Point: <%=data[0].point %></p>
+                <a href="/bookinglist?delete_book_id=<%= data[0].trainerschedule_id %>"><button class="butcenred">Delete</button></a>
+
+
+            </div>
+            
+           </div>
+           <%
+           totalPrice = totalPrice+ parseFloat(data[0].price);
+           totalPoint = totalPoint+parseInt(data[0].point);
+        })
+    }
+
+    if(classbooking.length>0){
+        classbooking.forEach(data=>{
+           %>
+           <div class="mainbooklist">
+            <div class="cenbooklist">
+                <h1>Class : <%=data[0].class_name %></h1>
+                <p>Capacity : <%=data[0].capacity %></p>
+                <p>Day: <%=data[0].class_day %> , Time: <%=data[0].class_time %></p>
+                <p>Date: <%=date_time(data[0].class_day) %></p>
+                <p>Price: <%=data[0].price %> , Point: <%=data[0].point %></p>
+                <a href="/bookinglist?class_delete_book_id=<%= data[0].classschedule_id %>"><button class="butcenred">Delete</button></a>
+
+
+            </div>
+            
+           </div>
+           <%
+           totalPrice = totalPrice+ parseFloat(data[0].price);
+           totalPoint = totalPoint+parseInt(data[0].point);
+        })
+    }
+    %>
+    
+
+    <div class="butbooklist">
+        <p>Total Price: <%=totalPrice %></p>
+        <p>Total Points: <%=totalPoint %></p>
+        <a href="/confirm_booking"><button class="butcenbook">Confirm</button></a><br>
+        <a href="/trinaersearch"><button class="butcenbook">back to Trainer search</button></a>
+        <a href="/classsearch"><button class="butcenbook">back to Class search</button></a>
+    </div>
+</body>
+</html>

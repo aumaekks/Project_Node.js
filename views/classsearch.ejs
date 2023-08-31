@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Booking Search</title>
+    <!-- BOOTSTRAP CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="/style.css"> -->
+    
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@800&family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+    <!-- upper bar -->
+    <div>
+        <div>
+            <div class="card-body" style="font-size:30px; background-color: rgba(255, 255, 255, 0.347);">
+                <h1 class="fixed" style= "font-size:40px; color:white;">HEALTHCLUB</h1><center>
+                <a style='color:rgb(0, 0, 0);'href="/">Home</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/schedule">Schedule</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/rating">Rating</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/bookinglist">Booking cart</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/profile"><%= name %></a> &nbsp;&nbsp;
+                <a href="/logout" class="btn btn-danger">Logout</a></center>
+            </div>
+            <div>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <!-- body -->
+    <%
+    if(list.length>0){
+        list.forEach((data)=>{
+            %>
+            <div class="maintrainscr">
+                <div class="traincearch">
+                    <div class="traincearchbox">
+                        <h1>Class Name : <%= data.class_name %></h1>
+                        <p>Type : <%= data.type_name %></p>
+                        <a href="/classsearch?t_id=<%= data.class_id %>"><button class="searchtrainbut2" >More</button></a>
+                    </div>
+                </div>
+            </div>
+            <%
+        })
+    }else{
+        %>
+            <h1 class="traincearchbox">Not found</h1>
+        <%
+    }
+   %>
+   <div class="mainbutback">
+    <a href="/"><button class="butback" >back</button></a>
+   </div>
+</body>
+</html>

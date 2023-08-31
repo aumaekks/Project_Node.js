@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+    <!-- BOOTSTRAP CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="/style.css"> -->
+    
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@800&family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+    <!-- upper bar -->
+    <div>
+        <div>
+            <div class="card-body" style="font-size:30px; background-color: rgba(255, 255, 255, 0.347);">
+                <h1 class="fixed" style= "font-size:40px; color:white;">HEALTHCLUB</h1><center>
+                <a style='color:rgb(0, 0, 0);'href="/">Home</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/schedule">Schedule</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/rating">Rating</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="report">Report</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/bookinglist">Booking cart</a> &nbsp;&nbsp;
+                <a style='color:rgb(0, 0, 0);' href="/profile"><%= name %></a> &nbsp;&nbsp;
+                <a href="/logout" class="btn btn-danger">Logout</a></center>
+            </div>
+            <div>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <!-- body -->
+    <div class="mainbooking">
+        <div class="cenbook">
+            <h1>Booking Exercise Class</h1><br><br>
+    <% 
+    let today = new Date();
+    let dayOfWeek = today.getDay();
+    let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    let day = class_booking[0].class_day;
+    
+    let daysUntilTargetDay = (days.indexOf(day) + 7 - dayOfWeek) % 7;
+    const current = today.getDate()+daysUntilTargetDay;
+
+    let targetDate = new Date(today.getFullYear(), today.getMonth(),current+1);
+    let targetDateString = targetDate.toISOString().slice(0, 10);
+
+    
+        %><p>trainer name : <%= class_booking[0][0].class_name%></p><%
+        %><p>capacity : <%= class_booking[0][0].capacity%></p><%
+        %><p>exercise class day : <%= class_booking[0][0].class_day%></p><%
+        %><p>exercise class time : <%= class_booking[0][0].class_time%></p><%
+        %><p>exercise class date : <%= targetDateString%></p><%
+        %><p>point : <%= class_booking[0][0].point%></p><%
+        %><p>price : <%= class_booking[0][0].price%></p><br><%
+        %>
+        <form action="/addbook" method="post">
+            <input type="hidden" name="classbooking" value="<%= class_booking[0][0].classschedule_id %>">
+            <div class="butbook">
+                <button class="butbook" type="submit">+ Add in Booking List</button>
+
+            </div>
+
+            
+        </form>
+        </div>
+
+
+    </div>
+</body>
+</html>

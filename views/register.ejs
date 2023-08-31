@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <title>Log-in</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="containerregister">
+        <h1 class="logtex">Register</h1>
+        <form action="/register" method="post">
+            
+            <div class="topre">
+                Name <br>
+                <input class="butre" type="text" name="customer_name" required placeholder="Type your Name" ><br><br>
+                E-mail <br>
+                <input class="butre" type="email" name="customer_email" required placeholder="Type your E-mail" ><br><br>
+                Password <br>
+                <input class="butre" type="password" name="customer_pass" required placeholder="Type your E-mail" ><br><br>
+                Gender :
+                <input type="radio" name="customer_gender" value="m" required> Male 
+                <input type="radio" name="customer_gender" value="f" required> Famale<br><br>
+                Date of birth: <input  class="butredate"type="date" name="customer_date" required><br><br>
+                <button  class="butlogsub" type="submit">Next</button>
+                
+            </div><br>
+            <a  href="/login"  > <p class="texre">Login</p> </a>
+          
+    </div>
+</body>
+</html>

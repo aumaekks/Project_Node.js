@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Trainer Report</title>
+    <!-- BOOTSTRAP CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="/style.css"> -->
+    
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@800&family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="maintextreport">
+    <h1>Trainer Rating</h1>
+    <h4><%=feedname %></h4>
+  </div>
+  <div class="maintextreport">
+    <a href="/report/trainer-rating"> <button> report trainer rating </button> </a>
+    <a href="/report/trainer-rating/trainer-recommend"> <button> report trainer feedback </button> </a>
+  </div>
+    <!-- body -->
+    
+   <br>
+    
+   <div class="laylaeard mainmemberreport chart myChart">
+    <div class="mainconmemberreport">
+      <form action="/report/trainer-rating/trainer-recommend" method="get">
+        <div class="radiomaintrinerreport">
+          <h1>Trainer Gender</h1>
+          <input type="radio" name="t_gender" value="all"> All 
+          <input type="radio" name="t_gender" value="m"> Male
+          <input type="radio" name="t_gender" value="f"> Female
+          <h1>Customer</h1>
+          <input type="radio" name="cus_gender" value ='all'> All
+          <input type="radio" name="cus_gender" value = 'm'> Male
+          <input type="radio" name="cus_gender" value = 'f'> Female
+          <h1>Feedback</h1>
+          <input type="radio" name="feed_" value ='1'> want to adjust the teaching method
+          <input type="radio" name="feed_" value = '2'> want to teach more detail<br>
+          <input type="radio" name="feed_" value = '3'> inappropriate language<br>
+          <input type="radio" name="feed_" value = '4' checked> other
+
+        </div>
+       
+        <div class="radiomaintrinerreport">
+          <h1>Customer range</h1>
+          between <br><input type="date" name="mindate" max="<%= new Date().toISOString().split('T')[0] %>"> <br>to <br><input type="date" name="maxdate" max="<%= new Date().toISOString().split('T')[0] %>" >
+        </div>
+
+        <div class="datemainconmemberreport">
+          <select name="date">
+            <option value="all" selected>All</option>
+            <option value="year">This year</option>
+            <option value="month">This month</option>
+            <option value="week">This week</option>
+            <option value="day">This day</option>
+          </select>
+          <button type="submit">Report</button>
+        </div>
+    
+        
+      </form>
+      
+    </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <h1>Booking Infomation</h1>  
+    <%
+    
+    console.log(trainer_name_list);
+    console.log(trainer_count_list);
+    var index = 0;
+     trainer_name_list.forEach((data)=>{
+        if(trainer_count_list[index] !=0 && trainer_count_list[index].length >0){
+            if(trainer_count_list[index].length > 1){
+                %> <br>
+                    <div style="border: rgb(75, 75, 99) solid 2px;">
+                        <p><%=data%> : <%
+                
+                trainer_count_list[index].forEach(data_=>{
+                    %>
+                        <%=data_ %>
+                    <%
+                })
+                %> 
+                        </p>  
+                    </div>
+                    <br>
+                <%
+            }else{
+            %>
+                <br>
+                    <div style="border: rgb(75, 75, 99) solid 2px;">
+                        <p><%=data%> : <%=trainer_count_list[index]%></p> 
+                    </div>
+                <br>
+            <%
+            }
+        }else{
+            %>
+            <br>
+                <div style="border: rgb(75, 75, 99) solid 2px;">
+                    <p><%=data%> : Dont have any feedback</p> 
+                </div>
+            <br>
+            <%
+        }
+        index++;
+     })
+    %>
+  </div>
+  <a href="/report"><button class="butmemreport">back</button></a>
+
+
+    
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Trainer Searching</title>
+</head>
+<body>
+    <%
+    let trainerNameValue = '';
+    if (typeof trainer_name !== 'undefined' && trainer_name !== null) {
+        console.log(trainer_name);
+        trainerNameValue = trainer_name;
+    }
+    %>
+    <form action="/trinaersearch" method="get">
+        <div class="searchtrain">
+            <input type="text" class="searchtrainbut" name="trainername" placeholder="Trainer Name" value="<%= trainerNameValue %>">
+            <button class="searchtrainbut2" type="submit">Search</button><br>
+
+        </div>
+        
+    </form>
+    
+   <%
+    if(trainer_list.length>0){
+        trainer_list.forEach((data)=>{
+            %>
+            <div class="maintrainscr">
+                <div class="traincearch">
+                    <div class="traincearchbox">
+                        <h1>Name : <%= data.trainer_name %></h1>
+                        <p>Age : <%= data.age %></p>
+                        <p>Gender : <%= data.full_gender %></p><br>
+                        <a href="/trinaersearch?t_id=<%= data.trainer_id %>"><button class="searchtrainbut2" >More</button></a>
+                    </div>
+                </div>
+            </div>
+            <%
+        })
+    }else{
+        %>
+            <h1 class="traincearchbox">Not found</h1>
+        <%
+    }
+   %>
+   <div class="mainbutback">
+    <a href="/"><button class="butback" >back</button></a>
+   </div>
+</body>
+</html>
